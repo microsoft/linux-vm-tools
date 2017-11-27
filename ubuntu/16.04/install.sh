@@ -81,7 +81,7 @@ sudo make install
 
 if [ -f /etc/lightdm/lightdm.conf ]; then
     sudo grep -f /etc/lightdm/lightdm.conf "xserver-config=/etc/X11/xrdp/xorg.conf"
-    if [ "$?" != "0"]; then
+    if [ "$?" != "0" ]; then
         echo "xserver-config=/etc/X11/xrdp/xorg.conf" | sudo tee --append /etc/lightdm/lightdm.conf > /dev/null
     fi
 else
