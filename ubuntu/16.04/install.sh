@@ -1,5 +1,12 @@
 #! /bin/bash
 
+#
+# This script is for Ubuntu 16.04+ to download and install XRDP+XORGXRDP via
+# source.
+#
+# Major thanks to: http://c-nergy.be/blog/?p=10752 for the tips.
+#
+
 ###############################################################################
 # Update our machine to the latest code if we need to.
 #
@@ -20,16 +27,21 @@ fi
 ###############################################################################
 # XRDP
 #
+export XRDP_PATH=~/git/src/github.com/neutrinolabs/xrdp
+
+# Install the xrdp service so we have the auto start behavior
+sudo apt install -y xrdp
 
 # Get XRDP requirements
 sudo apt install -y autoconf libtool libssl-dev libpam0g-dev libx11-dev libxfixes-dev libxrandr-dev libjpeg-dev libfuse-dev nasm
-# sudo apt install -y xrdp
 
 # Get XRDP
-git clone https://github.com/neutrinolabs/xrdp ~/git/xrdp
+if [ ! -d $XRDP_PATH ]; then
+    git clone https://github.com/neutrinolabs/xrdp $XRDP_PATH
+fi
 
 # Configure XRDP
-cd ~/git/xrdp
+cd $XRDP_PATH
 ./bootstrap
 ./configure --enable-vsock --enable-jpeg --enable-fuse
 
@@ -47,7 +59,32 @@ sudo sed -i_orig -e 's/crypt_level=high/crypt_level=none/g' /etc/xrdp/xrdp.ini
 # sudo sed -n -e 's/max_bpp=32/max_bpp=24/g' /etc/xrdp/xrdp.ini
 
 # use the default lightdm x display
-sudo sed -i_orig -e 's/X11DisplayOffset=10/X11DisplayOffset=0/g' /etc/xrdp/sesman.ini
+# sudo sed -i_orig -e 's/X11DisplayOffset=10/X11DisplayOffset=0/g' /etc/xrdp/sesman.ini
+
+# 16.04.3 changed the allowed_users
+sudo sed -i_orig -e 's/allowed_users=console/allowed_users=anybody/g' /etc/X11/Xwrapper.config
+
+# reconfigure the service
+sudo systemctl daemon-reload
+sudo systemctl enable xrdp.service
+sudo systemctl enable xrdp-sesman.service
+
+# Configure the policy xrdp session
+sudo bash -c 'cat >/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf <<EOF
+
+polkit.addRule(function(action, subject) {
+    if ((action.id == "org.freedesktop.color-manager.create-device" ||
+         action.id == "org.freedesktop.color-manager.modify-profile" ||
+         action.id == "org.freedesktop.color-manager.delete-device" ||
+         action.id == "org.freedesktop.color-manager.create-profile" ||
+         action.id == "org.freedesktop.color-manager.modify-profile" ||
+         action.id == "org.freedesktop.color-manager.delete-profile") &&
+        subject.isInGroup("{group}"))
+    {
+        return polkit.Result.YES;
+    }
+});
+EOF'
 
 #
 # End XRDP
@@ -56,16 +93,23 @@ sudo sed -i_orig -e 's/X11DisplayOffset=10/X11DisplayOffset=0/g' /etc/xrdp/sesma
 ###############################################################################
 # XORGXRDP
 #
+export XORGXRDP_PATH=~/git/src/github.com/neutrinolabs/xorgxrdp
 
 # Get XORGXRDP requirements
-sudo apt install -y autoconf libtool xserver-xorg-dev libxfont1-dev
-# sudo apt install -y xorgxrdp
+sudo apt install -y autoconf libtool xserver-xorg-core xserver-xorg-dev
+
+# 16.04.3 is missing fontutil.h
+if [ ! -f /usr/include/X11/fonts/fontutil.h ]; then
+    sudo apt install -y libxfont1-dev
+fi
 
 # Get XORGXRDP
-git clone https://github.com/neutrinolabs/xorgxrdp ~/git/xorgxrdp
+if [ ! -d $XORGXRDP_PATH ]; then
+    git clone https://github.com/neutrinolabs/xorgxrdp $XORGXRDP_PATH
+fi
 
 # Configure XORGXRDP
-cd ~/git/xorgxrdp
+cd $XORGXRDP_PATH
 ./bootstrap
 ./configure
 
@@ -77,17 +121,7 @@ sudo make install
 # End XORGXRDP
 ###############################################################################
 
-# configure lightdm to use xrdp's xorg.conf on startup.
-
-if [ -f /etc/lightdm/lightdm.conf ]; then
-    sudo grep -f /etc/lightdm/lightdm.conf "xserver-config=/etc/X11/xrdp/xorg.conf"
-    if [ "$?" != "0" ]; then
-        echo "xserver-config=/etc/X11/xrdp/xorg.conf" | sudo tee --append /etc/lightdm/lightdm.conf > /dev/null
-    fi
-else
-    # No lightdm config file.
-    echo "[Seat:*]" > sudo tee /etc/lightdm/lightdm.conf > /dev/null
-    echo "xserver-config=/etc/X11/xrdp/xorg.conf" | sudo tee --append /etc/lightdm/lightdm.conf > /dev/null
-fi
-
 #reboot
+echo
+echo "Reboot your machine to begin using XRDP"
+echo
