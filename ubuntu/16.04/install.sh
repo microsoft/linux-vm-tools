@@ -56,6 +56,9 @@ sudo sed -i_orig -e 's/use_vsock=false/use_vsock=true/g' /etc/xrdp/xrdp.ini
 sudo sed -i_orig -e 's/security_layer=negotiate/security_layer=rdp/g' /etc/xrdp/xrdp.ini
 # remove encryption validation.
 sudo sed -i_orig -e 's/crypt_level=high/crypt_level=none/g' /etc/xrdp/xrdp.ini
+# disable bitmap compression since its local its much faster
+sudo sed -i_orig -e 's/bitmap_compression=true/bitmap_compression=false/g' /etc/xrdp/xrdp.ini
+#
 # sudo sed -n -e 's/max_bpp=32/max_bpp=24/g' /etc/xrdp/xrdp.ini
 
 # use the default lightdm x display
