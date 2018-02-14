@@ -21,7 +21,12 @@ sudo apt install -y git
 sudo apt install -y linux-azure
 
 if [ -f /var/run/reboot-required ]; then
-    reboot
+    echo
+    echo "A reboot is required in order to proceed with the install."
+    echo "Please reboot and re-run this script to finish the install."
+    echo
+
+    exit
 fi
 
 ###############################################################################
@@ -124,7 +129,6 @@ sudo make install
 # End XORGXRDP
 ###############################################################################
 
-#reboot
 echo
-echo "Reboot your machine to begin using XRDP"
+echo "Install is complete. Reboot your machine to begin using XRDP."
 echo
