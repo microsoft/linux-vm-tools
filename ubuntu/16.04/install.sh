@@ -130,5 +130,9 @@ sudo make install
 ###############################################################################
 
 echo
-echo "Install is complete. Reboot your machine to begin using XRDP."
+echo "Install is complete."
+echo "Reboot your machine to begin using XRDP."
+echo
+echo "Note: If this is the user account you would like to use for remote access run ./config-user.sh."
+echo
 echo
