@@ -77,6 +77,11 @@ sudo rmmod vmw_vsock_vmci_transport
 sudo rmmod vsock
 sudo modprobe hv_sock
 
+# Blacklist the vmw module
+echo "blacklist vmw_vsock_vmci_transport" >> /etc/modprobe.d/blacklist.conf
+#Ensure hv_sock gets loaded
+echo "hv_sock" >> /etc/modules
+
 # Configure the policy xrdp session
 sudo bash -c 'cat >/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf <<EOF
 
@@ -101,6 +106,9 @@ sudo systemctl start xrdp
 #
 # End XRDP
 ###############################################################################
+
+# Install Gmone Tweak
+sudo apt-get install gnome-tweak-tool -y
 
 #reboot
 echo
