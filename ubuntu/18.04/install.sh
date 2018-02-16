@@ -23,7 +23,12 @@ sudo apt-get update
 sudo apt install linux-image-4.14.0-17-generic
 
 if [ -f /var/run/reboot-required ]; then
-    reboot
+    echo
+    echo "A reboot is required in order to proceed with the install."
+    echo "Please reboot and re-run this script to finish the install."
+    echo
+
+    exit
 fi
 
 ###############################################################################
@@ -110,7 +115,7 @@ sudo systemctl start xrdp
 # Install Gmone Tweak
 sudo apt-get install gnome-tweak-tool -y
 
-#reboot
 echo
-echo "Reboot your machine to begin using XRDP"
+echo "Install is complete."
+echo "Reboot your machine to begin using XRDP."
 echo
