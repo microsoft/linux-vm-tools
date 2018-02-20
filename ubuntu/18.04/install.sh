@@ -83,9 +83,12 @@ sudo rmmod vsock
 sudo modprobe hv_sock
 
 # Blacklist the vmw module
-echo "blacklist vmw_vsock_vmci_transport" >> /etc/modprobe.d/blacklist.conf
+sudo bash -c 'echo "blacklist vmw_vsock_vmci_transport" >> /etc/modprobe.d/blacklist.conf <<EOF
+EOF'
+
 #Ensure hv_sock gets loaded
-echo "hv_sock" >> /etc/modules
+sudo bash -c 'echo "hv_sock" >> /etc/modules <<EOF
+EOF'
 
 # Configure the policy xrdp session
 sudo bash -c 'cat >/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf <<EOF
