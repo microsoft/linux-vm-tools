@@ -11,16 +11,14 @@
 # Update our machine to the latest code if we need to.
 #
 
-sudo apt update
-sudo apt upgrade -y
+# Check if we have the bionic-proposed sources list
+sudo cat /etc/apt/sources.list | grep bionic-proposed > /dev/null
+if [ "$?" == "1" ]; then
+sudo bash -c 'echo "deb http://archive.ubuntu.com/ubuntu/ bionic-proposed restricted main multiverse universe" >> /etc/apt/sources.list <<EOF
+EOF'
+fi
 
-# Get git if we dont have it.
-sudo apt install -y git
-
-# TODO: Remove the custom kernel logic when 18.04 supports hv_sock by default.
-sudo add-apt-repository ppa:billy-olsen/test-kernels-bionic
-sudo apt-get update
-sudo apt install linux-image-4.14.0-17-generic
+sudo apt update && sudo apt dist-upgrade -y
 
 if [ -f /var/run/reboot-required ]; then
     echo
@@ -34,32 +32,12 @@ fi
 ###############################################################################
 # XRDP
 #
-export XRDP_PATH=~/git/src/github.com/neutrinolabs/xrdp
 
 # Install the xrdp service so we have the auto start behavior
 sudo apt install -y xrdp
 
-# Get XRDP requirements
-# ./bootstrap requirements 'autoconf libtool pkg-config'
-# ./configure requirements 'libssl-dev libpam0g-dev libjpeg-dev libfuse-dev libx11-dev libxfixes-dev libxrandr-dev nasm'
-sudo apt install -y autoconf libtool pkg-config libssl-dev libpam0g-dev libjpeg-dev libfuse-dev libx11-dev libxfixes-dev libxrandr-dev nasm
-
-# Get XRDP
-if [ ! -d $XRDP_PATH ]; then
-    git clone https://github.com/neutrinolabs/xrdp $XRDP_PATH
-fi
-
-# Configure XRDP
-cd $XRDP_PATH
-./bootstrap
-./configure --enable-vsock --enable-jpeg --enable-fuse
-
 sudo systemctl stop xrdp
 sudo systemctl stop xrdp-sesman
-
-# Build/Install XRDP
-make
-sudo make install
 
 # Configure the installed XRDP ini files.
 # use vsock transport.
