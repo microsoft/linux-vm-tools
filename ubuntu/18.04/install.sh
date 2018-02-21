@@ -11,8 +11,12 @@
 # Update our machine to the latest code if we need to.
 #
 
+# Check if we have the bionic-proposed sources list
+sudo cat /etc/apt/sources.list | grep bionic-proposed > /dev/null
+if [ "$?" == "1" ]; then
 sudo bash -c 'echo "deb http://archive.ubuntu.com/ubuntu/ bionic-proposed restricted main multiverse universe" >> /etc/apt/sources.list <<EOF
 EOF'
+fi
 
 sudo apt update && sudo apt dist-upgrade -y
 
@@ -57,12 +61,18 @@ sudo rmmod vsock
 sudo modprobe hv_sock
 
 # Blacklist the vmw module
+sudo cat /etc/modprobe.d/blacklist.conf | grep vmw_vsock_vmci_transport > /dev/null
+if [ "$?" == "1" ]; then
 sudo bash -c 'echo "blacklist vmw_vsock_vmci_transport" >> /etc/modprobe.d/blacklist.conf <<EOF
 EOF'
+fi
 
 #Ensure hv_sock gets loaded
+sudo cat /etc/modules | grep hv_sock > /dev/null
+if [ "$?" == "1" ]; then
 sudo bash -c 'echo "hv_sock" >> /etc/modules <<EOF
 EOF'
+fi
 
 # Configure the policy xrdp session
 sudo bash -c 'cat >/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf <<EOF
