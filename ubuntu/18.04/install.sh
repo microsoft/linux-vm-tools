@@ -54,19 +54,26 @@ sudo sed -i_orig -e 's/bitmap_compression=true/bitmap_compression=false/g' /etc/
 
 # Changed the allowed_users
 sudo sed -i_orig -e 's/allowed_users=console/allowed_users=anybody/g' /etc/X11/Xwrapper.config
+sudo dpkg-reconfigure xserver-xorg-legacy
 
 # Enable the hv_sock module
-sudo rmmod vmw_vsock_vmci_transport
-sudo rmmod vsock
-sudo modprobe hv_sock
+# sudo rmmod vmw_vsock_vmci_transport
+# sudo rmmod vsock
+# sudo modprobe hv_sock
 
 # Blacklist the vmw module
+sudo cat /etc/modprobe.d/blacklist.conf | grep vmw_vsock_vmci_transport > /dev/null
+if [ "$?" == "1" ]; then
 sudo bash -c 'echo "blacklist vmw_vsock_vmci_transport" >> /etc/modprobe.d/blacklist.conf <<EOF
 EOF'
+fi
 
 #Ensure hv_sock gets loaded
+sudo cat /etc/modules | grep hv_sock > /dev/null
+if [ "$?" == "1" ]; then
 sudo bash -c 'echo "hv_sock" >> /etc/modules <<EOF
 EOF'
+fi
 
 # Configure the policy xrdp session
 sudo bash -c 'cat >/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf <<EOF
@@ -93,7 +100,7 @@ sudo systemctl start xrdp
 # End XRDP
 ###############################################################################
 
-# Install Gmone Tweak
+# Install Gnome Tweak
 sudo apt-get install gnome-tweak-tool -y
 
 echo
