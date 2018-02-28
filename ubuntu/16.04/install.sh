@@ -125,6 +125,9 @@ cd $XORGXRDP_PATH
 make
 sudo make install
 
+#Installing xorgxrdp knocks out ubuntu-desktop from running. We need to reinstall it
+sudo apt-get install --reinstall ubuntu-desktop
+
 #
 # End XORGXRDP
 ###############################################################################
