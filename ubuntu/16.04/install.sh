@@ -48,7 +48,7 @@ fi
 # Configure XRDP
 cd $XRDP_PATH
 ./bootstrap
-./configure --enable-vsock --enable-jpeg --enable-fuse
+./configure --enable-ipv6 --enable-jpeg --enable-fuse --enable-rfxcodec --enable-opus --enable-painter --enable-vsock
 
 # Build/Install XRDP
 make
