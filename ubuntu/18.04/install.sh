@@ -66,19 +66,19 @@ modprobe hv_sock
 # Blacklist the vmw module
 cat /etc/modprobe.d/blacklist.conf | grep vmw_vsock_vmci_transport > /dev/null
 if [ "$?" == "1" ]; then
- bash -c 'echo "blacklist vmw_vsock_vmci_transport" >> /etc/modprobe.d/blacklist.conf <<EOF
+    bash -c 'echo "blacklist vmw_vsock_vmci_transport" >> /etc/modprobe.d/blacklist.conf <<EOF
 EOF'
 fi
 
-#Ensure hv_sock gets loaded
- cat /etc/modules | grep hv_sock > /dev/null
+# Ensure hv_sock gets loaded
+cat /etc/modules | grep hv_sock > /dev/null
 if [ "$?" == "1" ]; then
- bash -c 'echo "hv_sock" >> /etc/modules <<EOF
+    bash -c 'echo "hv_sock" >> /etc/modules <<EOF
 EOF'
 fi
 
 # Configure the policy xrdp session
- bash -c 'cat >/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf <<EOF
+bash -c 'cat >/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf <<EOF
 
 polkit.addRule(function(action, subject) {
     if ((action.id == "org.freedesktop.color-manager.create-device" ||
