@@ -18,6 +18,7 @@ fi
 
 apt update && apt upgrade -y
 
+
 if [ -f /var/run/reboot-required ]; then
     echo "A reboot is required in order to proceed with the install." >&2
     echo "Please reboot and re-run this script to finish the install." >&2
@@ -56,14 +57,15 @@ rmmod vsock
 modprobe hv_sock
 
 # Blacklist the vmw module
-cat /etc/modprobe.d/blacklist.conf | grep vmw_vsock_vmci_transport > /dev/null
+cat /etc/modprobe.d/blacklist.conf | grep vmw_vsock_vmci_transport --quiet
 if [ "$?" == "1" ]; then
     bash -c 'echo "blacklist vmw_vsock_vmci_transport" >> /etc/modprobe.d/blacklist.conf <<EOF
 EOF'
 fi
 
-# Ensure hv_sock gets loaded
-cat /etc/modules | grep hv_sock > /dev/null
+
+#Ensure hv_sock gets loaded
+cat /etc/modules | grep hv_sock --quiet
 if [ "$?" == "1" ]; then
     bash -c 'echo "hv_sock" >> /etc/modules <<EOF
 EOF'
