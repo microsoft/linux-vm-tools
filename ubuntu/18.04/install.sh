@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 #
 # This script is for Ubuntu 18.04 Bionic Beaver to download and install XRDP+XORGXRDP via
@@ -11,6 +11,7 @@
 # Update our machine to the latest code if we need to.
 #
 
+
 # Check if we have the bionic-proposed sources list
 sudo cat /etc/apt/sources.list | grep bionic-proposed > /dev/null
 if [ "$?" == "1" ]; then
@@ -21,12 +22,9 @@ fi
 sudo apt update && sudo apt dist-upgrade -y
 
 if [ -f /var/run/reboot-required ]; then
-    echo
-    echo "A reboot is required in order to proceed with the install."
-    echo "Please reboot and re-run this script to finish the install."
-    echo
-
-    exit
+    echo "A reboot is required in order to proceed with the install." >&2
+    echo "Please reboot and re-run this script to finish the install." >&2
+    exit 1
 fi
 
 ###############################################################################
