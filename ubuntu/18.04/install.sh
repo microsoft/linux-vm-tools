@@ -16,15 +16,7 @@ if [ ! $(id -u) ] ; then
     exit 1
 fi
 
-# Check if we have the bionic-proposed sources list
-
-cat /etc/apt/sources.list | grep bionic-proposed > /dev/null
-if [ "$?" == "1" ]; then
-bash -c 'echo "deb http://archive.ubuntu.com/ubuntu/ bionic-proposed restricted main multiverse universe" >> /etc/apt/sources.list <<EOF
-EOF'
-fi
-
-apt update && apt dist-upgrade -y
+apt update && apt upgrade -y
 
 if [ -f /var/run/reboot-required ]; then
     echo "A reboot is required in order to proceed with the install." >&2
