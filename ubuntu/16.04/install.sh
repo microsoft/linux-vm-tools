@@ -40,7 +40,7 @@ export XRDP_PATH=~/git/src/github.com/neutrinolabs/xrdp
 apt install -y xrdp
 
 # Get XRDP requirements
-apt install -y autoconf libtool libssl-dev libpam0g-dev libx11-dev libxfixes-dev libxrandr-dev libjpeg-dev libfuse-dev nasm
+apt install -y autoconf libtool libssl-dev libpam0g-dev libx11-dev libxfixes-dev libxrandr-dev libjpeg-dev libfuse-dev nasm libopus-dev
 
 # Get XRDP
 if [ ! -d $XRDP_PATH ]; then
