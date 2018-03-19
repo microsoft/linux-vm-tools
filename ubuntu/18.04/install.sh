@@ -18,7 +18,6 @@ fi
 
 apt update && apt upgrade -y
 
-
 if [ -f /var/run/reboot-required ]; then
     echo "A reboot is required in order to proceed with the install." >&2
     echo "Please reboot and re-run this script to finish the install." >&2
@@ -57,23 +56,20 @@ rmmod vsock
 modprobe hv_sock
 
 # Blacklist the vmw module
-cat /etc/modprobe.d/blacklist.conf | grep vmw_vsock_vmci_transport --quiet
-if [ "$?" == "1" ]; then
-    bash -c 'echo "blacklist vmw_vsock_vmci_transport" >> /etc/modprobe.d/blacklist.conf <<EOF
-EOF'
+if [ ! -e /etc/modprobe.d/blacklist_vmw_vsock_vmci_transport.conf ] ; then
+cat >> /etc/modprobe.d/blacklist_vmw_vsock_vmci_transport.conf <<EOF
+blacklist vmw_vsock_vmci_transport" 
+EOF
 fi
 
 
 #Ensure hv_sock gets loaded
-cat /etc/modules | grep hv_sock --quiet
-if [ "$?" == "1" ]; then
-    bash -c 'echo "hv_sock" >> /etc/modules <<EOF
-EOF'
+if [ ! -e /etc/modules-load.d/hv_sock.conf ] ; then
+echo "hv_sock" > /etc/modules-load.d/hv_sock.conf
 fi
 
 # Configure the policy xrdp session
-bash -c 'cat >/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf <<EOF
-
+cat >/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf <<EOF
 polkit.addRule(function(action, subject) {
     if ((action.id == "org.freedesktop.color-manager.create-device" ||
          action.id == "org.freedesktop.color-manager.modify-profile" ||
@@ -86,7 +82,7 @@ polkit.addRule(function(action, subject) {
         return polkit.Result.YES;
     }
 });
-EOF'
+EOF
 
 # reconfigure the service
 systemctl daemon-reload
