@@ -56,17 +56,16 @@ rmmod vsock
 modprobe hv_sock
 
 # Blacklist the vmw module
-
-if grep vmw_vsock_vmci_transport /etc/modprobe.d/blacklist.conf --quiet ; then
-cat >> /etc/modprobe.d/blacklist.conf <<EOF
+if [ ! -e /etc/modprobe.d/blacklist_vmw_vsock_vmci_transport.conf ] ; then
+cat >> /etc/modprobe.d/blacklist_vmw_vsock_vmci_transport.conf <<EOF
 blacklist vmw_vsock_vmci_transport" 
 EOF
 fi
 
 
 #Ensure hv_sock gets loaded
-if ! grep  hv_sock /etc/modules --quiet ; then
-echo "hv_sock" >> /etc/modules
+if [ ! -e /etc/modules-load.d/hv_sock.conf ] ; then
+echo "hv_sock" > /etc/modules-load.d/hv_sock.conf
 fi
 
 # Configure the policy xrdp session
