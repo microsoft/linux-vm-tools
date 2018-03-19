@@ -71,6 +71,9 @@ sed -i_orig -e 's/bitmap_compression=true/bitmap_compression=false/g' /etc/xrdp/
 # use the default lightdm x display
 # sed -i_orig -e 's/X11DisplayOffset=10/X11DisplayOffset=0/g' /etc/xrdp/sesman.ini
 
+# rename the redirected drives to 'shared-drives'
+sed -i_orig -e 's/FuseMountName=thinclient_drives/FuseMountName=shared-drives/g' /etc/xrdp/sesman.ini
+
 # 16.04.3 changed the allowed_users
 sed -i_orig -e 's/allowed_users=console/allowed_users=anybody/g' /etc/X11/Xwrapper.config
 

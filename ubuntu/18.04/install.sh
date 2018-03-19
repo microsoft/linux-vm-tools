@@ -47,6 +47,9 @@ sed -i_orig -e 's/bitmap_compression=true/bitmap_compression=false/g' /etc/xrdp/
 # use the default lightdm x display
 #  sed -i_orig -e 's/X11DisplayOffset=10/X11DisplayOffset=0/g' /etc/xrdp/sesman.ini
 
+# rename the redirected drives to 'shared-drives'
+sed -i_orig -e 's/FuseMountName=thinclient_drives/FuseMountName=shared-drives/g' /etc/xrdp/sesman.ini
+
 # Changed the allowed_users
 sed -i_orig -e 's/allowed_users=console/allowed_users=anybody/g' /etc/X11/Xwrapper.config
 
@@ -58,7 +61,7 @@ modprobe hv_sock
 # Blacklist the vmw module
 if [ ! -e /etc/modprobe.d/blacklist_vmw_vsock_vmci_transport.conf ] ; then
 cat >> /etc/modprobe.d/blacklist_vmw_vsock_vmci_transport.conf <<EOF
-blacklist vmw_vsock_vmci_transport" 
+blacklist vmw_vsock_vmci_transport"
 EOF
 fi
 
