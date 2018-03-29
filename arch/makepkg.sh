@@ -1,12 +1,18 @@
 #!/bin/bash
 #
-# Do not run this script directly, it gets executed by install.sh.
+# This script is for Arch Linux to download and install XRDP+XORGXRDP
 #
 
 if [ $(id -u) -eq 0 ] ; then
     echo 'This script must be run as a non-root user, as building packages as root is unsupported.' >&2
     exit 1
 fi
+
+###############################################################################
+# Prepare by installing build tools.
+#
+# Partial upgrades aren't supported in arch.
+sudo pacman -Syu --needed --noconfirm base base-devel git
 
 # Create a build directory in tmpfs
 mkdir /tmp/build && cd "$_"

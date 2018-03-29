@@ -1,6 +1,7 @@
 #!/bin/bash
+
 #
-# Do not run this script directly, it gets executed by install.sh.
+# This script is for Arch Linux to configure XRDP for enhanced session mode
 #
 # The configuration is adapted from the Ubuntu 16.04 script.
 #
@@ -10,10 +11,21 @@ if [ $(id -u) -ne 0 ] ; then
     exit 1
 fi
 
-###############################################################################
-# XRDP
-#
+# Use Qi to check for exact package name
+if ! pacman -Qi xrdp > /dev/null ; then
+    echo 'xrdp not installed. Run makepkg.sh first to install xrdp.' >&2
+    exit 1
+fi
 
+# Use Qs to allow xorgxrdp-devel-git
+if ! pacman -Qs xorgxrdp > /dev/null ; then
+    echo 'xorgxrdp not installed. Run makepkg.sh first to install xorgxrdp.' >&2
+    exit 1
+fi
+
+###############################################################################
+# Configure XRDP
+#
 systemctl enable xrdp
 systemctl enable xrdp-sesman
 
@@ -68,3 +80,9 @@ password    include     system-remote-login
 session     include     system-remote-login
 EOF
 
+
+###############################################################################
+# .xinitrc has to be modified manually.
+#
+echo "You will have to configure .xinitrc to start your windows manager, see https://wiki.archlinux.org/index.php/Xinit"
+echo "Reboot your machine to begin using XRDP."
