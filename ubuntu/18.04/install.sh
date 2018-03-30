@@ -58,9 +58,6 @@ fi
 # use the script to setup the ubuntu session
 sed -i_orig -e 's/startwm/startubuntu/g' /etc/xrdp/sesman.ini
 
-# use the default lightdm x display
-#  sed -i_orig -e 's/X11DisplayOffset=10/X11DisplayOffset=0/g' /etc/xrdp/sesman.ini
-
 # rename the redirected drives to 'shared-drives'
 sed -e 's/FuseMountName=thinclient_drives/FuseMountName=shared-drives/g' /etc/xrdp/sesman.ini
 
