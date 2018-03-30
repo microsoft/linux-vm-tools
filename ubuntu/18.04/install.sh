@@ -59,7 +59,7 @@ fi
 sed -i_orig -e 's/startwm/startubuntu/g' /etc/xrdp/sesman.ini
 
 # rename the redirected drives to 'shared-drives'
-sed -e 's/FuseMountName=thinclient_drives/FuseMountName=shared-drives/g' /etc/xrdp/sesman.ini
+sed -i -e 's/FuseMountName=thinclient_drives/FuseMountName=shared-drives/g' /etc/xrdp/sesman.ini
 
 # Changed the allowed_users
 sed -i_orig -e 's/allowed_users=console/allowed_users=anybody/g' /etc/X11/Xwrapper.config
