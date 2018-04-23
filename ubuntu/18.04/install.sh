@@ -72,7 +72,7 @@ modprobe hv_sock
 # Blacklist the vmw module
 if [ ! -e /etc/modprobe.d/blacklist_vmw_vsock_vmci_transport.conf ] ; then
 cat >> /etc/modprobe.d/blacklist_vmw_vsock_vmci_transport.conf <<EOF
-blacklist vmw_vsock_vmci_transport"
+blacklist vmw_vsock_vmci_transport
 EOF
 fi
 
