@@ -11,7 +11,7 @@
 # Update our machine to the latest code if we need to.
 #
 
-if [ ! $(id -u) ] ; then
+if [ $(id -u) -ne 0 ] ; then
     echo 'This script must be run with root privileges' >&2
     exit 1
 fi
@@ -63,11 +63,6 @@ sed -i -e 's/FuseMountName=thinclient_drives/FuseMountName=shared-drives/g' /etc
 
 # Changed the allowed_users
 sed -i_orig -e 's/allowed_users=console/allowed_users=anybody/g' /etc/X11/Xwrapper.config
-
-# Enable the hv_sock module
-rmmod vmw_vsock_vmci_transport
-rmmod vsock
-modprobe hv_sock
 
 # Blacklist the vmw module
 if [ ! -e /etc/modprobe.d/blacklist_vmw_vsock_vmci_transport.conf ] ; then
