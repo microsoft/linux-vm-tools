@@ -1,8 +1,11 @@
 # What is xrdp-init
-xrdp-init is a repository for bash scripts to enable an enhanced session mode on Linux VMs (Ubuntu, arch) for Hyper-V.
+xrdp-init is a repository for bash scripts to enable an enhanced session mode on Linux VMs (Ubuntu, arch) for Hyper-V. You can learn more about this effort by reading our [blog post](https://blogs.technet.microsoft.com/virtualization/2018/02/28/sneak-peek-taking-a-spin-with-enhanced-linux-vms/).
 
 # How to use the repo
-Onboarding instructions can be found on the [wiki](https://msazure.visualstudio.com/MicrosoftContainerRegistry/_wiki).
+Onboarding instructions can be found on the [repo wiki]().
+
+# FAQ
+Frequently Asked Questions for this repo can be found on the [repo wiki]().
 
 # Contributing
 
