@@ -28,6 +28,10 @@ fi
 # XRDP
 #
 
+# Install hv_kvp utils
+apt install -y linux-tools-virtual
+apt install -y linux-cloud-tools-virtual
+
 # Install the xrdp service so we have the auto start behavior
 apt install -y xrdp
 
