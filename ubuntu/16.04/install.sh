@@ -92,7 +92,7 @@ polkit.addRule(function(action, subject) {
          action.id == "org.freedesktop.color-manager.create-profile" ||
          action.id == "org.freedesktop.color-manager.modify-profile" ||
          action.id == "org.freedesktop.color-manager.delete-profile") &&
-        subject.isInGroup("{group}"))
+        subject.isInGroup("users"))
     {
         return polkit.Result.YES;
     }
