@@ -83,21 +83,20 @@ systemctl enable xrdp.service
 systemctl enable xrdp-sesman.service
 
 # Configure the policy xrdp session
-bash -c 'cat > /etc/polkit-1/localauthority.conf.d/02-allow-colord.conf <<EOF
+# polkit policy definition language changes depending on its version. See issue #61
+if [[ "$(pkaction --version | sed -E 's/^[[:alnum:] ]*([[:digit:]]+.*)/\1/' - )" != '0.105' ]]; then
+    echo "Error: Policy rule specification probably invalid. Expected version: 0.105 detected $(pkaction --version)." >&2
+    exit 1
+fi
 
-polkit.addRule(function(action, subject) {
-    if ((action.id == "org.freedesktop.color-manager.create-device" ||
-         action.id == "org.freedesktop.color-manager.modify-profile" ||
-         action.id == "org.freedesktop.color-manager.delete-device" ||
-         action.id == "org.freedesktop.color-manager.create-profile" ||
-         action.id == "org.freedesktop.color-manager.modify-profile" ||
-         action.id == "org.freedesktop.color-manager.delete-profile") &&
-        subject.isInGroup("users"))
-    {
-        return polkit.Result.YES;
-    }
-});
-EOF'
+cat > /etc/polkit-1/localauthority/50-local.d/45-allow-colord.pkla <<EOF
+[Allow Colord all Users]
+Identity=unix-user:*
+Action=org.freedesktop.color-manager.create-device;org.freedesktop.color-manager.create-profile;org.freedesktop.color-manager.delete-device;org.freedesktop.color-manager.delete-profile;org.freedesktop.color-manager.modify-device;org.freedesktop.color-manager.modify-profile
+ResultAny=no
+ResultInactive=no
+ResultActive=yes
+EOF
 
 #
 # End XRDP
@@ -131,7 +130,7 @@ make
 make install
 
 #Installing xorgxrdp knocks out ubuntu-desktop from running. We need to reinstall it
-apt-get install --reinstall ubuntu-desktop
+apt-get install -y --reinstall ubuntu-desktop
 
 #
 # End XORGXRDP
