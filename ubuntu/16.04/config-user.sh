@@ -7,7 +7,7 @@
 # Major thanks to: http://c-nergy.be/blog/?p=10752 for the tips.
 #
 
-if [ ! $(id -u) ]; then
+if [ ! "$(id -u)" ]; then
     echo 'This script must be run with root privileges' >&2
     exit 1
 fi
