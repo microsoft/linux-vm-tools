@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 #
 # This script configures the logged in users xsession to properly
