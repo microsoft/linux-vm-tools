@@ -1,24 +1,23 @@
 #!/bin/bash
-
 #
 # This script is for Arch Linux to configure XRDP for enhanced session mode
 #
 # The configuration is adapted from the Ubuntu 16.04 script.
 #
 
-if [ $(id -u) -ne 0 ] ; then
+if [ $(id -u) -ne 0 ]; then
     echo 'This script must be run with root privileges' >&2
     exit 1
 fi
 
 # Use Qi to check for exact package name
-if ! pacman -Qi xrdp > /dev/null ; then
+if [ ! pacman -Qi xrdp > /dev/null ]; then
     echo 'xrdp not installed. Run makepkg.sh first to install xrdp.' >&2
     exit 1
 fi
 
 # Use Qs to allow xorgxrdp-devel-git
-if ! pacman -Qs xorgxrdp > /dev/null ; then
+if [ ! pacman -Qs xorgxrdp > /dev/null ]; then
     echo 'xorgxrdp not installed. Run makepkg.sh first to install xorgxrdp.' >&2
     exit 1
 fi
@@ -51,7 +50,7 @@ echo "allowed_users=anybody" > /etc/X11/Xwrapper.config
 
 
 #Ensure hv_sock gets loaded
-if [ ! -e /etc/modules-load.d/hv_sock.conf ] ; then
+if [ ! -e /etc/modules-load.d/hv_sock.conf ]; then
 	echo "hv_sock" > /etc/modules-load.d/hv_sock.conf
 fi
 
@@ -72,7 +71,7 @@ polkit.addRule(function(action, subject) {
 EOF
 
 # Adapt the xrdp pam config
-cat >/etc/pam.d/xrdp-sesman <<EOF
+cat > /etc/pam.d/xrdp-sesman <<EOF
 #%PAM-1.0
 auth        include     system-remote-login
 account     include     system-remote-login
