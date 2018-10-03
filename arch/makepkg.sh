@@ -15,7 +15,8 @@ fi
 sudo pacman -Syu --needed --noconfirm base base-devel git
 
 # Create a build directory in tmpfs
-mkdir /tmp/build && cd "$_"
+TMPDIR=$(mktemp -d)
+pushd $TMPDIR
 
 ###############################################################################
 # XRDP
@@ -35,3 +36,5 @@ mkdir /tmp/build && cd "$_"
 )
 ###############################################################################
 
+#remove build directory
+rm -rf $TMPDIR
