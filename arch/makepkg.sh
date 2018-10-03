@@ -1,9 +1,10 @@
 #!/bin/bash
+
 #
 # This script is for Arch Linux to download and install XRDP+XORGXRDP
 #
 
-if [ $(id -u) -eq 0 ] ; then
+if [ $(id -u) -eq 0 ]; then
     echo 'This script must be run as a non-root user, as building packages as root is unsupported.' >&2
     exit 1
 fi
