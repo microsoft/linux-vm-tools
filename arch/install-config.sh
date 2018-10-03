@@ -1,4 +1,5 @@
 #!/bin/bash
+
 #
 # This script is for Arch Linux to configure XRDP for enhanced session mode
 #
