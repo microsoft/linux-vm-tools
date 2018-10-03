@@ -11,7 +11,7 @@
 # Update our machine to the latest code if we need to.
 #
 
-if [ $(id -u) -ne 0 ] ; then
+if [ $(id -u) -ne 0 ]; then
     echo 'This script must be run with root privileges' >&2
     exit 1
 fi
@@ -83,7 +83,7 @@ systemctl enable xrdp.service
 systemctl enable xrdp-sesman.service
 
 # Configure the policy xrdp session
-bash -c 'cat >/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf <<EOF
+bash -c 'cat > /etc/polkit-1/localauthority.conf.d/02-allow-colord.conf <<EOF
 
 polkit.addRule(function(action, subject) {
     if ((action.id == "org.freedesktop.color-manager.create-device" ||
