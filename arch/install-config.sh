@@ -12,13 +12,13 @@ if [ $(id -u) -ne 0 ]; then
 fi
 
 # Use Qi to check for exact package name
-if [ ! pacman -Qi xrdp > /dev/null ]; then
+if ! pacman -Qi xrdp > /dev/null ; then
     echo 'xrdp not installed. Run makepkg.sh first to install xrdp.' >&2
     exit 1
 fi
 
 # Use Qs to allow xorgxrdp-devel-git
-if [ ! pacman -Qs xorgxrdp > /dev/null ]; then
+if ! pacman -Qs xorgxrdp > /dev/null ; then
     echo 'xorgxrdp not installed. Run makepkg.sh first to install xorgxrdp.' >&2
     exit 1
 fi
@@ -56,7 +56,7 @@ if [ ! -e /etc/modules-load.d/hv_sock.conf ]; then
 fi
 
 # Configure the policy xrdp session
-cat >/etc/polkit-1/rules.d/02-allow-colord.rules <<EOF
+cat > /etc/polkit-1/rules.d/02-allow-colord.rules <<EOF
 polkit.addRule(function(action, subject) {
     if ((action.id == "org.freedesktop.color-manager.create-device" ||
          action.id == "org.freedesktop.color-manager.modify-profile" ||
