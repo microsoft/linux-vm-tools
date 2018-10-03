@@ -7,12 +7,12 @@
 # Major thanks to: http://c-nergy.be/blog/?p=10752 for the tips.
 #
 
-if [ ! $(id -u) ] ; then
+if [ ! $(id -u) ]; then
     echo 'This script must be run with root privileges' >&2
     exit 1
 fi
 
-bash -c "cat >~/.xsession <<EOF
+bash -c "cat > ~/.xsession <<EOF
 
 /usr/lib/gnome-session/gnome-session-binary --session=ubuntu &
 /usr/lib/x86_64-linux-gnu/unity/unity-panel-service &
