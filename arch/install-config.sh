@@ -6,7 +6,7 @@
 # The configuration is adapted from the Ubuntu 16.04 script.
 #
 
-if [ $(id -u) -ne 0 ] ; then
+if [ $(id -u) -ne 0 ]; then
     echo 'This script must be run with root privileges' >&2
     exit 1
 fi
@@ -51,12 +51,12 @@ echo "allowed_users=anybody" > /etc/X11/Xwrapper.config
 
 
 #Ensure hv_sock gets loaded
-if [ ! -e /etc/modules-load.d/hv_sock.conf ] ; then
+if [ ! -e /etc/modules-load.d/hv_sock.conf ]; then
 	echo "hv_sock" > /etc/modules-load.d/hv_sock.conf
 fi
 
 # Configure the policy xrdp session
-cat >/etc/polkit-1/rules.d/02-allow-colord.rules <<EOF
+cat > /etc/polkit-1/rules.d/02-allow-colord.rules <<EOF
 polkit.addRule(function(action, subject) {
     if ((action.id == "org.freedesktop.color-manager.create-device" ||
          action.id == "org.freedesktop.color-manager.modify-profile" ||
@@ -72,7 +72,7 @@ polkit.addRule(function(action, subject) {
 EOF
 
 # Adapt the xrdp pam config
-cat >/etc/pam.d/xrdp-sesman <<EOF
+cat > /etc/pam.d/xrdp-sesman <<EOF
 #%PAM-1.0
 auth        include     system-remote-login
 account     include     system-remote-login
