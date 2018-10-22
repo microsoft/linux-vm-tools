@@ -11,7 +11,7 @@
 # Update our machine to the latest code if we need to.
 #
 
-if [ $(id -u) -ne 0 ]; then
+if [ "$(id -u)" -ne 0 ]; then
     echo 'This script must be run with root privileges' >&2
     exit 1
 fi
@@ -48,7 +48,7 @@ if [ ! -d $XRDP_PATH ]; then
 fi
 
 # Configure XRDP
-cd $XRDP_PATH
+cd $XRDP_PATH || exit
 ./bootstrap
 ./configure --enable-ipv6 --enable-jpeg --enable-fuse --enable-rfxcodec --enable-opus --enable-painter --enable-vsock
 
@@ -121,7 +121,7 @@ if [ ! -d $XORGXRDP_PATH ]; then
 fi
 
 # Configure XORGXRDP
-cd $XORGXRDP_PATH
+cd $XORGXRDP_PATH || exit
 ./bootstrap
 ./configure
 

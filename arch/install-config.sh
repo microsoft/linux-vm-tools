@@ -6,7 +6,7 @@
 # The configuration is adapted from the Ubuntu 16.04 script.
 #
 
-if [ $(id -u) -ne 0 ]; then
+if [ "$(id -u)" -ne 0 ]; then
     echo 'This script must be run with root privileges' >&2
     exit 1
 fi
