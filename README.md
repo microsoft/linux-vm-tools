@@ -2,7 +2,7 @@
 This repository is the home of a set of bash scripts that enable and configure an enhanced session mode on Linux VMs (Ubuntu, arch) for Hyper-V. You can learn more about this in our [blog post](https://blogs.technet.microsoft.com/virtualization/2018/02/28/sneak-peek-taking-a-spin-with-enhanced-linux-vms/).
 
 # How to use the repo
-Onboarding instructions can be found on the [repo wiki](https://github.com/Microsoft/linux-vm-tools/wiki/Onboarding).
+Onboarding instructions for Ubuntu can be found on the [repo wiki](https://github.com/Microsoft/linux-vm-tools/wiki/Onboarding:-Ubuntu).
 
 # FAQ
 Frequently Asked Questions for this repo can be found on the [repo wiki](https://github.com/Microsoft/linux-vm-tools/wiki/FAQ).
