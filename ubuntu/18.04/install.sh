@@ -8,6 +8,12 @@
 #
 
 ###############################################################################
+# Use HWE kernel packages
+#
+HWE=""
+#HWE="-hwe-18.04"
+
+###############################################################################
 # Update our machine to the latest code if we need to.
 #
 
@@ -29,8 +35,8 @@ fi
 #
 
 # Install hv_kvp utils
-apt install -y linux-tools-virtual
-apt install -y linux-cloud-tools-virtual
+apt install -y linux-tools-virtual${HWE}
+apt install -y linux-cloud-tools-virtual${HWE}
 
 # Install the xrdp service so we have the auto start behavior
 apt install -y xrdp
