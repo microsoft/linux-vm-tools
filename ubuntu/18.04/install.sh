@@ -39,7 +39,7 @@ apt install -y linux-tools-virtual${HWE}
 apt install -y linux-cloud-tools-virtual${HWE}
 
 # Install the xrdp service so we have the auto start behavior
-apt install -y xrdp
+apt install -y xrdp xserver-xorg-core xorgxrdp
 
 systemctl stop xrdp
 systemctl stop xrdp-sesman
