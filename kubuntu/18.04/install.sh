@@ -81,18 +81,23 @@ blacklist vmw_vsock_vmci_transport
 EOF
 fi
 
-#Ensure hv_sock gets loaded
+# Ensure hv_sock gets loaded
 if [ ! -e /etc/modules-load.d/hv_sock.conf ]; then
 echo "hv_sock" > /etc/modules-load.d/hv_sock.conf
 fi
 
-# Configure the policy xrdp session
-cat > /etc/polkit-1/localauthority/50-local.d/45-allow-colord.pkla <<EOF
-[Allow Colord all Users]
-Identity=unix-user:*
-Action=org.freedesktop.color-manager.create-device;org.freedesktop.color-manager.create-profile;org.freedesktop.color-manager.delete-device;org.freedesktop.color-manager.delete-profile;org.freedesktop.color-manager.modify-device;org.freedesktop.color-manager.modify-profile
-ResultAny=no
-ResultInactive=no
+# Retrieve all available polkit actions and separate them accordingly
+pkaction > /tmp/available_actions
+actions=$(sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/;/g' /tmp/available_actions)
+rm /tmp/available_actions
+
+# Configure the policies for xrdp session
+cat > /etc/polkit-1/localauthority/50-local.d/xrdp-allow-all.pkla <<EOF
+[Allow all for all sudoers]
+Identity=unix-group:sudo
+Action=$actions
+ResultAny=yes
+ResultInactive=yes
 ResultActive=yes
 EOF
 
