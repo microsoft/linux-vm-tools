@@ -54,19 +54,21 @@ sed -i_orig -e 's/crypt_level=high/crypt_level=none/g' /etc/xrdp/xrdp.ini
 # disable bitmap compression since its local its much faster
 sed -i_orig -e 's/bitmap_compression=true/bitmap_compression=false/g' /etc/xrdp/xrdp.ini
 
-# Add script to setup the ubuntu session properly
-if [ ! -e /etc/xrdp/startubuntu.sh ]; then
-cat >> /etc/xrdp/startubuntu.sh << EOF
+# Add script to setup the kubuntu session properly
+if [ ! -e /etc/xrdp/startkubuntu.sh ]; then
+cat >> /etc/xrdp/startkubuntu.sh << EOF
 #!/bin/sh
-export GNOME_SHELL_SESSION_MODE=ubuntu
-export XDG_CURRENT_DESKTOP=ubuntu:GNOME
+export XDG_CURRENT_DESKTOP=KDE
+export XDG_SESSION_DESKTOP=KDE
+export XDG_DATA_DIRS=/usr/share/plasma:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+export XDG_CONFIG_DIRS=/etc/xdg/xdg-plasma:/etc/xdg:/usr/share/kubuntu-default-settings/kf5-settings
 exec /etc/xrdp/startwm.sh
 EOF
-chmod a+x /etc/xrdp/startubuntu.sh
+chmod a+x /etc/xrdp/startkubuntu.sh
 fi
 
-# use the script to setup the ubuntu session
-sed -i_orig -e 's/startwm/startubuntu/g' /etc/xrdp/sesman.ini
+# use the script to setup the kubuntu session
+sed -i_orig -e 's/startwm/startkubuntu/g' /etc/xrdp/sesman.ini
 
 # rename the redirected drives to 'shared-drives'
 sed -i -e 's/FuseMountName=thinclient_drives/FuseMountName=shared-drives/g' /etc/xrdp/sesman.ini
