@@ -67,6 +67,6 @@ EOF
 # .xinitrc has to be modified manually.
 #
 #echo "exec gnome-session" > ~/.xinitrc
-echo "exec startxfce4" > ~/.xinitrc
-echo "You will have to configure .xinitrc to start your windows manager, see https://wiki.archlinux.org/index.php/Xinit"
+#echo "exec startxfce4" > ~/.xinitrc
+#echo "You will have to configure .xinitrc to start your windows manager, see https://wiki.archlinux.org/index.php/Xinit"
 echo "Reboot your machine to begin using XRDP."
