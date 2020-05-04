@@ -11,7 +11,7 @@
 # Use HWE kernel packages
 #
 HWE=""
-#HWE="-hwe-18.04"
+#HWE="-hwe-20.04"
 
 ###############################################################################
 # Update our machine to the latest code if we need to.
