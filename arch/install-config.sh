@@ -7,8 +7,8 @@
 #
 
 if [ "$(id -u)" -ne 0 ]; then
-    echo 'This script must be run with root privileges' >&2
-    exit 1
+    #rerun the script with root privileges
+    exec sudo "$0" "$@"
 fi
 
 # Use Qi to check for exact package name
