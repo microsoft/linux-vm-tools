@@ -75,15 +75,13 @@ sed -i -e 's/FuseMountName=thinclient_drives/FuseMountName=shared-drives/g' /etc
 sed -i_orig -e 's/allowed_users=console/allowed_users=anybody/g' /etc/X11/Xwrapper.config
 
 # Blacklist the vmw module
-if [ ! -e /etc/modprobe.d/blacklist_vmw_vsock_vmci_transport.conf ]; then
-cat >> /etc/modprobe.d/blacklist_vmw_vsock_vmci_transport.conf <<EOF
-blacklist vmw_vsock_vmci_transport
-EOF
+if [ ! -e /etc/modprobe.d/blacklist-vmw_vsock_vmci_transport.conf ]; then
+  echo blacklist vmw_vsock_vmci_transport" > /etc/modprobe.d/blacklist-vmw_vsock_vmci_transport.conf
 fi
 
 #Ensure hv_sock gets loaded
 if [ ! -e /etc/modules-load.d/hv_sock.conf ]; then
-echo "hv_sock" > /etc/modules-load.d/hv_sock.conf
+  echo "hv_sock" > /etc/modules-load.d/hv_sock.conf
 fi
 
 # Configure the policy xrdp session
