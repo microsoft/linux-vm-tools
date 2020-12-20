@@ -1,0 +1,10 @@
+module allow-vsock 1.0;
+
+require {
+        type unconfined_service_t;
+        type unlabeled_t;
+        class vsock_socket { getattr read write };
+}
+
+#============= unconfined_service_t ==============
+allow unconfined_service_t unlabeled_t:vsock_socket { getattr read write };
