@@ -49,7 +49,7 @@ sed -i_orig -e 's/bitmap_compression=true/bitmap_compression=false/g' $XRDP_INI_
 
 XRDP_SESMAN_INI_FILE=/etc/xrdp/sesman.ini
 # use the default lightdm x display
-sed -i_orig -e 's/X11DisplayOffset=10/X11DisplayOffset=0/g' $XRDP_SESMAN_INI_FILE
+#sed -i_orig -e 's/X11DisplayOffset=200/X11DisplayOffset=0/g' $XRDP_SESMAN_INI_FILE
 # rename the redirected drives to 'shared-drives'
 sed -i_orig -e 's/FuseMountName=thinclient_drives/FuseMountName=shared-drives/g' $XRDP_SESMAN_INI_FILE
 
