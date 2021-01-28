@@ -1,2 +1,2 @@
-# This Repo Has Been Archieved
+# This Repo Has Been Archived
 This repo has been archived. You can continue to use the optimized Ubuntu image that is available by default in the Hyper-V Quick Create Gallery. If you are looking for an integrated Linux developer experience on Windows, we encourage you to check out [WSL 2](https://docs.microsoft.com/en-us/windows/wsl/). WSL 2 lets developers run a GNU/Linux environment -- including most command-line tools, utilities, and applications -- directly on Windows, unmodified, without the overhead of a traditional virtual machine or dualboot setup. The ability to run Linux GUI apps in WSL is also on the [roadmap](https://devblogs.microsoft.com/commandline/whats-new-in-the-windows-subsystem-for-linux-september-2020/#gui-apps).
