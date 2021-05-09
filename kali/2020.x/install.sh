@@ -68,5 +68,6 @@ EOF
 #
 #echo "exec gnome-session" > ~/.xinitrc
 #echo "exec startxfce4" > ~/.xinitrc
+#echo "exec mate-session" > ~/.xinitrc exec mate-session
 #echo "You will have to configure .xinitrc to start your windows manager, see https://wiki.archlinux.org/index.php/Xinit"
 echo "Reboot your machine to begin using XRDP."
