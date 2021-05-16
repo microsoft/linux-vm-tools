@@ -63,9 +63,9 @@ ResultInactive=no
 ResultActive=yes
 EOF
 
-# gdm3 support.
-if [ -e /etc/gdm3/custom.conf ]; then
-	sed -i_orig -e 's/#WaylandEnable=false/WaylandEnable=false/g' /etc/gdm3/custom.conf
+# gdm3 support (experiment)
+if [ -e /etc/gdm3/daemon.conf ]; then
+	sed -i_orig -e 's/#WaylandEnable=false/WaylandEnable=false/g' /etc/gdm3/daemon.conf
 fi
 
 ###############################################################################
