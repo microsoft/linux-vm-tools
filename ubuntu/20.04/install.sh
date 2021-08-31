@@ -76,7 +76,7 @@ sed -i_orig -e 's/allowed_users=console/allowed_users=anybody/g' /etc/X11/Xwrapp
 
 # Blacklist the vmw module
 if [ ! -e /etc/modprobe.d/blacklist-vmw_vsock_vmci_transport.conf ]; then
-  echo blacklist vmw_vsock_vmci_transport" > /etc/modprobe.d/blacklist-vmw_vsock_vmci_transport.conf
+  echo "blacklist vmw_vsock_vmci_transport" > /etc/modprobe.d/blacklist-vmw_vsock_vmci_transport.conf
 fi
 
 #Ensure hv_sock gets loaded
