@@ -2,7 +2,7 @@
 This repository is the home of a set of bash scripts that enable and configure an enhanced session mode on Linux VM -- especially for Kali Linux -- for Hyper-V.
 
 # For Kali-Linux Users.
-This project's code has merged to https://gitlab.com/kalilinux/packages/kali-tweaks/-/blob/kali/master/helpers/hyperv-enhanced-mode
+This project's code has merged to https://gitlab.com/kalilinux/packages/kali-tweaks/-/blob/kali/master/helpers/hyperv-enhanced-mode <br />
 So, please use "kali-tweaks" command instead of it.
 
 how to use:
